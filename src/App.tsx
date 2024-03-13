@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { Provider } from 'react-redux'
+import styled, { createGlobalStyle } from 'styled-components'
+import { createStore } from 'redux'
+import { rootReducer } from './reducers'
+import ContactList from './components/ContactList'
+import ContactForm from './components/ContactForm'
 
-function App() {
+const GlobalStyle = createGlobalStyle`
+  body {
+    font-family: Helvetica, sans-serif;
+  }
+`
+
+const Container = styled.div`
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+`
+
+const store = createStore(rootReducer)
+
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Provider store={store}>
+      <>
+        <GlobalStyle />
+        <Container>
+          <h1>Lista de Contatos</h1>
+          <ContactList />
+          <h2>Adicionar Novo Contato</h2>
+          <ContactForm />
+        </Container>
+      </>
+    </Provider>
+  )
 }
 
-export default App;
+export default App
